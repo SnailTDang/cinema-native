@@ -1,13 +1,17 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
-import MoviesSwiper from "..";
+import React, { useEffect } from "react";
+import { loginStyles } from "../Login";
+import { SafeAreaView } from "react-native";
+import MoviesSwiper from "../MoviesSwiper";
 
 export default function HomePage() {
+  useEffect(()=> {
+    console.log('render')
+  },[])
     return (
-        <View style={{backgroundColor: '#c3c3c3'}}>
-            <Text>tasas</Text>
-            {/* <MoviesSwiper /> */}
-        </View>
+        <SafeAreaView style={loginStyles.safeAreaView}>
+            <MoviesSwiper />
+        </SafeAreaView>
     );
 }
 
