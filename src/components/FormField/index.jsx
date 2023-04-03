@@ -22,15 +22,10 @@ export default function FormField(props) {
     } = props;
     const [isShowPass, setShowPass] = useState(secureTextEntry);
     return (
-        <View
-            style={styles.formFieldWrapper}
-            onPress={() => {
-                onPress();
-                console.log(props);
-            }}
-        >
+        <View style={styles.formFieldWrapper}>
             <Text style={styles.labelText}>{label}</Text>
             <TextInput
+                onFocus={onPress}
                 placeholder={placeholder}
                 style={[styles.formFieldText, styleProps]}
                 onChange={(event) => {
@@ -81,10 +76,11 @@ const styles = StyleSheet.create({
     },
     visibilityBtn: {
         position: "absolute",
-        right: -25,
+        right: 0,
         bottom: "10%",
         height: "30%",
-        width: "30%",
+        width: "20%",
+        // marginRight: 10,
     },
     btnImage: {
         width: "100%",

@@ -7,6 +7,7 @@ import FormField from "../../../components/FormField";
 import { formData } from "../../../components/FormField/helper/FormData.helper";
 import colorHex from "../../../constants/colorHex";
 import { userServices } from "../../../services/UserServices";
+import ButtonText from "../../../components/ButtonText";
 
 const FormLogin = (props) => {
     const navigation = useNavigation();
@@ -17,6 +18,7 @@ const FormLogin = (props) => {
     });
 
     const fetchUserLogin = (user) => {
+        navigation.navigate("mainNavigation");
         if (user.taiKhoan === "" || user.matKhau === "") {
             if (user.taiKhoan === "" && user.matKhau === "") {
                 setMessLogin("Please Enter Your Account And Password!");
@@ -29,15 +31,16 @@ const FormLogin = (props) => {
             userServices
                 .postUserLogin(user)
                 .then((res) => {
-                    if (res.status === 200) {
-                        navigation.reset({
-                            index: 0,
-                            routes: [{ name: "mainNavigation" }],
-                        });
-                    }
+                    // if (res.status === 200) {
+                    //     navigation.reset({
+                    //         index: 0,
+                    //         routes: [{ name: "mainNavigation" }],
+                    //     });
+                    // }
                 })
                 .catch(() => {
                     setMessLogin("Login Fail! Please enter your account again");
+                    // navigation.navigate("mainNavigation");
                 });
         }
     };
@@ -52,14 +55,18 @@ const FormLogin = (props) => {
         <View style={styles.container}>
             <Text style={styles.message}>{messLogin}</Text>
             <FormField
-                onPress={clearMessLogin}
+                onPress={() => {
+                    clearMessLogin();
+                }}
                 label="Username"
                 formKey="taiKhoan"
                 placeholder="Your username"
                 handleFormValueChange={handleFormValueChange}
             />
             <FormField
-                onPress={clearMessLogin}
+                onPress={() => {
+                    clearMessLogin();
+                }}
                 label="Password"
                 formKey="matKhau"
                 placeholder="Your password"
@@ -69,16 +76,16 @@ const FormLogin = (props) => {
                 secureTextEntry={true}
                 handleFormValueChange={handleFormValueChange}
             />
-            <TouchableOpacity
+            <ButtonText
+                title={"LOGIN"}
+                activeOpacity={0.8}
                 style={styles.touchLogin}
                 onPress={() => {
                     if (formValues) {
                         fetchUserLogin(formValues);
                     }
                 }}
-            >
-                <Text style={styles.buttonLogin}>LOGIN</Text>
-            </TouchableOpacity>
+            />
         </View>
     );
 };
@@ -86,17 +93,7 @@ const FormLogin = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // display: "flex",
         margin: 20,
-    },
-    header: {
-        fontSize: 20,
-        paddingTop: 30,
-    },
-    formText: {
-        fontSize: 20,
-        padding: 10,
-        paddingLeft: 0,
     },
     message: {
         color: colorHex.mainOrange,
@@ -104,10 +101,10 @@ const styles = StyleSheet.create({
     },
     touchLogin: {
         marginTop: 30,
-        alignItems: "center",
+        alignSelf: "center",
+        width: "50%",
     },
     buttonLogin: {
-        width: "50%",
         textAlign: "center",
         backgroundColor: colorHex.mainOrange,
         color: colorHex.whiteMain,

@@ -15,11 +15,10 @@ import colorHex from "../../constants/colorHex";
 import FormLogin from "./components/FormLogin";
 
 export default function Login() {
-    const navigation = useNavigation();
 
     return (
         <SafeAreaView style={loginStyles.safeAreaView}>
-            <ScrollView style={{}}>
+            <View style={{ flex: 1 }}>
                 <View style={loginStyles.layout}>
                     <Image
                         source={require("../../../assets/METIZ_LOGO_WEB.png")}
@@ -34,7 +33,7 @@ export default function Login() {
                 <ContainerView styleProps={[loginStyles.mainView]}>
                     <FormLogin />
                 </ContainerView>
-            </ScrollView>
+            </View>
         </SafeAreaView>
     );
 }
@@ -47,13 +46,15 @@ export const loginStyles = StyleSheet.create({
     layout: {
         justifyContent: "center",
         alignItems: "center",
-        // alignSelf: "center",
-        // textAlign: "center",
+        flex: 2,
+        justifyContent: "flex-end",
     },
     mainView: {
-        flex: 1,
+        flex: 3,
         width: "70%",
+        // marginTop: 20,
         alignSelf: "center",
+        justifyContent: "flex-start",
     },
     title: {
         color: colorHex.mainOrange,

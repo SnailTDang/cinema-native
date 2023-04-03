@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useCallback } from "react";
 import Carousel, { ParallaxImage } from "react-native-snap-carousel";
 import {
     View,
@@ -8,41 +8,23 @@ import {
     TouchableOpacity,
     Platform,
     SafeAreaView,
+    Image,
 } from "react-native";
-import { Image } from "react-native";
-
-import { moviesManager } from "../../services/MoviesManager";
+import ButtonText from "../../components/ButtonText";
+import { useNavigation } from "@react-navigation/native";
 
 const MoviesSwiper = (props) => {
-    const { width, height } = useWindowDimensions();
-    const [screenHeight, setScreenHeight] = useState(height);
-    const [screenWidth, setScreenWidth] = useState(width);
-
-    const [banners, setBanners] = useState([]);
+    const { height, width } = useWindowDimensions();
+    const navigation = useNavigation();
     const carouselRef = useRef(null);
-
-    const goForward = () => {
-        carouselRef.current.snapToNext();
-    };
-
-    const fetchBanner = () => {
-        moviesManager.getListBanners("GP04").then((res) => {
-            // console.log(res);
-            setBanners(res.data);
-        });
-    };
-
-    useEffect(() => {
-        fetchBanner();
-    }, []);
 
     const renderItem = useCallback(({ item, index }, parallaxProps) => {
         return (
             <View
                 key={index}
                 style={{
-                    width: screenWidth - (screenWidth * 50) / 100,
-                    height: screenHeight / 2,
+                    width: width - (width * 50) / 100,
+                    height: height / 2,
                 }}
             >
                 <ParallaxImage
@@ -57,9 +39,13 @@ const MoviesSwiper = (props) => {
                     parallaxFactor={0.4}
                     {...parallaxProps}
                 />
-                <Text style={styles.title} numberOfLines={2}>
-                    {item.hinhAnh}
-                </Text>
+                <ButtonText
+                    activeOpacity={0.8}
+                    title={"BUY TICKET"}
+                    onPress={() => {
+                        navigation.navigate("DetailMovie");
+                    }}
+                />
             </View>
         );
     });
@@ -68,20 +54,15 @@ const MoviesSwiper = (props) => {
         <SafeAreaView style={styles.container}>
             <Carousel
                 ref={carouselRef}
-                sliderWidth={screenWidth}
-                sliderHeight={screenHeight / 2}
-                itemWidth={screenWidth - (screenWidth * 50) / 100}
+                sliderWidth={width}
+                sliderHeight={height / 2}
+                itemWidth={width - (width * 50) / 100}
                 layoutCardOffset={3}
                 hasParallaxImages={true}
-                data={banners}
-                // renderItem={renderItem}
+                data={props.banners}
                 renderItem={renderItem}
                 loop={true}
-                autoplay={true}
                 inactiveSlideOpacity={0.5}
-                loopClonesPerSide={2}
-                autoplayDelay={500}
-                autoplayInterval={3000}
             />
         </SafeAreaView>
     );
@@ -92,13 +73,7 @@ export default MoviesSwiper;
 const styles = StyleSheet.create({
     container: {
         marginTop: 20,
-        // flex: 1,
     },
-    // item: {
-    //     width: screenWidth - (screenWidth * 50) / 100,
-    //     height: screenHeight / 2,
-    //     // height: screenWidth - screenWidth*50/100,
-    // },
     imageContainer: {
         flex: 1,
         marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
@@ -106,7 +81,7 @@ const styles = StyleSheet.create({
     },
     image: {
         ...StyleSheet.absoluteFillObject,
-        resizeMode: "cover",
+        resizeMode: "contain",
         height: "100%",
         borderRadius: 8,
     },

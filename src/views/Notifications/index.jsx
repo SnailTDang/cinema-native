@@ -4,7 +4,7 @@ import React from "react";
 export default function Notifications() {
     return (
         <View>
-            <Text>index</Text>
+            <Text>Notifications</Text>
         </View>
     );
 }

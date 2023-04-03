@@ -1,7 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 export default function Profile() {
+  useEffect(()=>{
+
+  },[])
   return (
     <View>
       <Text>index</Text>
