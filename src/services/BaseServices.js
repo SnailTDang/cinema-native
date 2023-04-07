@@ -24,11 +24,11 @@ export class BaseService {
             url: `${DOMAIN_CYBER}/api/${url}`,
             method: "POST",
             data: model,
-            headers: {
-                Authorization:
-                    "Bearer " + JSON.parse(localStorage.getItem(TOKEN_CYBER)),
-                TokenCybersoft: API_TOKEN,
-            },
+            // headers: {
+            //     Authorization:
+            //         "Bearer " + JSON.parse(localStorage.getItem(TOKEN_CYBER)),
+            //     TokenCybersoft: API_TOKEN,
+            // },
         });
     };
 

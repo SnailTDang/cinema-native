@@ -55,9 +55,12 @@ const MoviesSwiper = (props) => {
                 <ButtonText
                     activeOpacity={0.8}
                     title={"TICKET"}
+                    fontSize={13}
                     style={styles.btnBuy}
                     onPress={() => {
-                        navigation.navigate("DetailMovie");
+                        navigation.navigate("DetailMovie", {
+                            idMovie: item.maPhim,
+                        });
                     }}
                 />
             </View>

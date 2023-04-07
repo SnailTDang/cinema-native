@@ -35,7 +35,8 @@ export default function HomeNavigation(props) {
                         titleHeader: null,
                         headerBar: false,
                         typeHeader: "home",
-                        hideHeader: true,
+                        hideHeader: true,       
+                        lockDrawer: true,
                     })}
                 />
                 <Drawer.Screen

@@ -35,7 +35,7 @@ export default function HeaderApp(props) {
     };
 
     return (
-        <View style={[styles.headerApp, { height: height / 12 }]}>
+        <View style={[styles.headerApp, { height: height / 16 }]}>
             <ButtonIcon
                 nameIcon={props.type === "home" ? "menu" : "arrow-back"}
                 onPress={() => {
@@ -48,7 +48,7 @@ export default function HeaderApp(props) {
             />
             {headerTitle(props.titleHeader)}
 
-            {props.type === "home" ? (
+            {props.type === "home" && (
                 <View>
                     <ButtonIcon
                         nameIcon={"notifications"}
@@ -59,7 +59,7 @@ export default function HeaderApp(props) {
                         colorButton={colorHex.mainOrange}
                     />
                 </View>
-            ) : null}
+            )}
         </View>
     );
 }

@@ -5,9 +5,9 @@ export const API_ENDPONIT = {
     USER_MANAGER: {
         USER_LOGIN: `/QuanLyNguoiDung/DangNhap`,
         USER_REGISTER: `/QuanLyNguoiDung/DangKy`,
+        GET_TICKETS_USER: `/QuanLyNguoiDung/ThongTinTaiKhoan`,
     },
     TICKET_MANAGER: {
-        GET_TICKETS_USER: `/QuanLyNguoiDung/ThongTinTaiKhoan`,
         GET_TICKETS_CINEMA: `/QuanLyDatVe/LayDanhSachPhongVe`,
         POST_TICKETS_MOVIE: `/QuanLyDatVe/DatVe`,
     },

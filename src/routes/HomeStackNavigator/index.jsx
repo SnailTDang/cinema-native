@@ -8,6 +8,7 @@ import optionDrawer from "../../components/LabelDrawer";
 const Stack = createStackNavigator();
 
 export default function HomeStackNavigator(props) {
+    console.log(props);
     return (
         <Stack.Navigator>
             <Stack.Screen
@@ -18,6 +19,7 @@ export default function HomeStackNavigator(props) {
                     titleHeader: null,
                     headerBar: true,
                     typeHeader: "home",
+                    lockDrawer: true,
                 })}
             />
             <Stack.Screen
@@ -30,7 +32,7 @@ export default function HomeStackNavigator(props) {
                     headerBar: true,
                     titleHeader: props.route.params || "Detail",
                     typeHeader: "Detail",
-                    lockDrawer: false,
+                    lockDrawer: true,
                 })}
             />
         </Stack.Navigator>

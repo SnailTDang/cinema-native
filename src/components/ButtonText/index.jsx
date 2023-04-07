@@ -1,18 +1,21 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import colorHex from "../../constants/colorHex";
+import { ActivityIndicator } from "react-native";
 
 export default function ButtonText(props) {
-    const { activeOpacity, style, onPress, title } = props;
+    const { activeOpacity, style, onPress, title, isLoading, fontSize } = props;
     return (
         <TouchableOpacity
             activeOpacity={activeOpacity}
             style={[styles.baseButton, style]}
-            onPress={() => {
-                onPress();
-            }}
+            onPress={onPress}
         >
-            <Text style={styles.button}>{title}</Text>
+            <View style={{ width: 50 }}></View>
+            <Text style={[styles.button, {fontSize: fontSize}]}>{title}</Text>
+            <View style={{ width: 50, alignSelf: 'center' }}>
+                {isLoading && <ActivityIndicator />}
+            </View>
         </TouchableOpacity>
     );
 }

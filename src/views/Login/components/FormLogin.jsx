@@ -1,8 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
-import { Touchable } from "react-native";
-import { TouchableOpacity } from "react-native";
-import { View, StyleSheet, Button, Text } from "react-native";
+import React, { useCallback, useState } from "react";
+import { View, StyleSheet, Text } from "react-native";
 import FormField from "../../../components/FormField";
 import { formData } from "../../../components/FormField/helper/FormData.helper";
 import colorHex from "../../../constants/colorHex";
@@ -11,39 +9,43 @@ import ButtonText from "../../../components/ButtonText";
 
 const FormLogin = (props) => {
     const navigation = useNavigation();
+    const [isLoading, setIsLoading] = useState(false);
     const [messLogin, setMessLogin] = useState("");
     const [formValues, handleFormValueChange] = formData({
         taiKhoan: "",
         matKhau: "",
     });
 
-    const fetchUserLogin = (user) => {
-        navigation.navigate("mainNavigation");
-        if (user.taiKhoan === "" || user.matKhau === "") {
-            if (user.taiKhoan === "" && user.matKhau === "") {
-                setMessLogin("Please Enter Your Account And Password!");
-            } else if (user.taiKhoan === "") {
-                setMessLogin("Please Enter Your Account!");
-            } else {
-                setMessLogin("Please Enter Your Password!");
-            }
+    const fetchUserLogin = useCallback((user) => {
+        if (!user.taiKhoan || !user.matKhau) {
+            setMessLogin(
+                !user.taiKhoan && !user.matKhau
+                    ? "Please Enter Your Account And Password!"
+                    : !user.taiKhoan
+                    ? "Please Enter Your Account!"
+                    : "Please Enter Your Password!"
+            );
         } else {
+            setIsLoading(true);
             userServices
                 .postUserLogin(user)
                 .then((res) => {
-                    // if (res.status === 200) {
-                    //     navigation.reset({
-                    //         index: 0,
-                    //         routes: [{ name: "mainNavigation" }],
-                    //     });
-                    // }
+                    if (res.status === 200) {
+                        navigation.navigate("mainNavigation");
+                        // navigation.reset({
+                        //     index: 0,
+                        //     routes: [{ name: "mainNavigation" }],
+                        // });
+                    }
+                    setIsLoading(false);
                 })
-                .catch(() => {
-                    setMessLogin("Login Fail! Please enter your account again");
-                    // navigation.navigate("mainNavigation");
+                .catch((err) => {
+                    setIsLoading(false);
+                    console.log(err);
+                    setMessLogin("Login Fail! Try enter right your account!");
                 });
         }
-    };
+    });
 
     const clearMessLogin = () => {
         if (messLogin) {
@@ -53,7 +55,6 @@ const FormLogin = (props) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.message}>{messLogin}</Text>
             <FormField
                 onPress={() => {
                     clearMessLogin();
@@ -76,14 +77,15 @@ const FormLogin = (props) => {
                 secureTextEntry={true}
                 handleFormValueChange={handleFormValueChange}
             />
+            <Text style={styles.message}>{messLogin}</Text>
             <ButtonText
+                isLoading={isLoading}
                 title={"LOGIN"}
+                fontSize={20}
                 activeOpacity={0.8}
                 style={styles.touchLogin}
                 onPress={() => {
-                    if (formValues) {
-                        fetchUserLogin(formValues);
-                    }
+                    fetchUserLogin(formValues);
                 }}
             />
         </View>
@@ -92,16 +94,18 @@ const FormLogin = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        margin: 20,
+        // flex: 1,
     },
     message: {
         color: colorHex.mainOrange,
         fontSize: 16,
+        marginTop: 10,
     },
     touchLogin: {
         marginTop: 30,
+        flexDirection: "row",
         alignSelf: "center",
+        justifyContent: "center",
         width: "50%",
     },
     buttonLogin: {

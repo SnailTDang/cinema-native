@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import React, { useEffect, useState } from "react";
-import { showtimeServices } from "../../services/showtimeServices";
+import { showtimeServices } from "../../services/ShowtimeServices";
 import { covertUrlImage } from "../MoviesSwiper";
 
 export default function DetailMovie(props) {
@@ -12,7 +12,6 @@ export default function DetailMovie(props) {
             .getDetailShowtimeMovie(params)
             .then((res) => {
                 setDetailMovie(res.data);
-                console.log(res.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -22,12 +21,6 @@ export default function DetailMovie(props) {
     useEffect(() => {
         getDetailMovie(props.route.params.idMovie);
     }, [props.route.params.idMovie]);
-
-    // useEffect(() => {
-    //     return () => {
-    //         setDetailMovie({});
-    //     };
-    // });
 
     return (
         <View style={{ flex: 1 }}>

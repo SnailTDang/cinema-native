@@ -35,7 +35,7 @@ export default function FormField(props) {
                 secureTextEntry={isShowPass}
                 {...textInputProps}
             />
-            {formKey === "matKhau" ? (
+            {formKey === "matKhau" && (
                 <TouchableOpacity
                     activeOpacity={0.8}
                     style={styles.visibilityBtn}
@@ -46,19 +46,21 @@ export default function FormField(props) {
                     <Image
                         source={
                             isShowPass
-                                ? require("../../../assets/hide.png")
-                                : require("../../../assets/show.png")
+                                ? require("../../../assets/show.png")
+                                : require("../../../assets/hide.png")
                         }
                         style={styles.btnImage}
                     />
                 </TouchableOpacity>
-            ) : null}
+            )}
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    formFieldWrapper: {},
+    formFieldWrapper: {
+        // flex: 1,
+    },
     formFieldText: {
         fontSize: 20,
         borderRadius: 15,
@@ -68,7 +70,7 @@ const styles = StyleSheet.create({
         backgroundColor: colorHex.whiteMain,
     },
     labelText: {
-        fontSize: 20,
+        fontSize: 16,
         marginBottom: 12,
         paddingLeft: 10,
         paddingTop: 10,

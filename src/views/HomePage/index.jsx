@@ -1,11 +1,10 @@
 import { StyleSheet } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { loginStyles } from "../Login";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import MoviesSwiper from "../MoviesSwiper";
 import { moviesManager } from "../../services/MoviesManager";
 import { ScrollView } from "react-native";
-import { View, Text } from "react-native";
 import ButtonText from "../../components/ButtonText";
 import colorHex from "../../constants/colorHex";
 
@@ -24,7 +23,6 @@ export default function HomePage(props) {
         moviesManager
             .getListMovies(params)
             .then((res) => {
-                // console.log(res);
                 setBanners(res.data);
             })
             .catch(() => {
@@ -64,6 +62,7 @@ export default function HomePage(props) {
                     <ButtonText
                         title={"SHOWING"}
                         activeOpacity={0.8}
+                        fontSize={15}
                         style={[
                             styles.btnSelect,
                             {
@@ -80,6 +79,7 @@ export default function HomePage(props) {
                     <ButtonText
                         title={"COMING"}
                         activeOpacity={0.8}
+                        fontSize={15}
                         style={[
                             styles.btnSelect,
                             {
@@ -111,5 +111,6 @@ const styles = StyleSheet.create({
         width: "40%",
         borderColor: "#ffffff",
         borderWidth: 2,
+        fontSize: 15,
     },
 });
