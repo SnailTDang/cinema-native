@@ -13,6 +13,12 @@ import {
 import ButtonText from "../../components/ButtonText";
 import { useNavigation } from "@react-navigation/native";
 
+export const covertUrlImage = (url) => {
+    if (url) {
+        return `https${url.slice(4, url.length)}`;
+    }
+};
+
 const MoviesSwiper = (props) => {
     const { height, width } = useWindowDimensions();
     const navigation = useNavigation();
@@ -24,24 +30,32 @@ const MoviesSwiper = (props) => {
                 key={index}
                 style={{
                     width: width - (width * 50) / 100,
-                    height: height / 2,
+                    height: height / 2.5,
                 }}
             >
-                <ParallaxImage
-                    source={{
-                        uri: `https${item.hinhAnh.slice(
-                            4,
-                            item.hinhAnh.length
-                        )}`,
+                <TouchableOpacity
+                    activeOpacity={1}
+                    style={[{ flex: 1 }]}
+                    onPress={() => {
+                        navigation.navigate("DetailMovie", {
+                            idMovie: item.maPhim,
+                        });
                     }}
-                    containerStyle={styles.imageContainer}
-                    style={styles.image}
-                    parallaxFactor={0.4}
-                    {...parallaxProps}
-                />
+                >
+                    <ParallaxImage
+                        source={{
+                            uri: covertUrlImage(item.hinhAnh),
+                        }}
+                        containerStyle={styles.imageContainer}
+                        style={styles.image}
+                        parallaxFactor={0.4}
+                        {...parallaxProps}
+                    />
+                </TouchableOpacity>
                 <ButtonText
                     activeOpacity={0.8}
-                    title={"BUY TICKET"}
+                    title={"TICKET"}
+                    style={styles.btnBuy}
                     onPress={() => {
                         navigation.navigate("DetailMovie");
                     }}
@@ -55,7 +69,7 @@ const MoviesSwiper = (props) => {
             <Carousel
                 ref={carouselRef}
                 sliderWidth={width}
-                sliderHeight={height / 2}
+                sliderHeight={height / 2.5}
                 itemWidth={width - (width * 50) / 100}
                 layoutCardOffset={3}
                 hasParallaxImages={true}
@@ -84,5 +98,8 @@ const styles = StyleSheet.create({
         resizeMode: "contain",
         height: "100%",
         borderRadius: 8,
+    },
+    btnBuy: {
+        marginTop: -30,
     },
 });

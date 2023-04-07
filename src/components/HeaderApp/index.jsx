@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import {
     Image,
@@ -9,23 +8,29 @@ import {
 } from "react-native";
 import colorHex from "../../constants/colorHex";
 import ButtonIcon from "../ButtonIcon";
+import LogoApp from "./components/Logo";
 
 export default function HeaderApp(props) {
     const { height } = useWindowDimensions();
-    const navigation = useNavigation();
 
     const headerTitle = (title) => {
         if (title === null) {
             return (
-                <View style={[styles.logoApp, { width: height / 12 }]}>
-                    <Image
-                        source={require("../../../assets/METIZ_LOGO_WEB.png")}
-                        style={styles.logoImg}
-                    />
-                </View>
+                <LogoApp
+                    styleView={[styles.logoApp, { width: height / 12 }]}
+                    styleImg={[styles.logoImg]}
+                />
             );
         } else {
-            return <Text style={styles.headerTitle}>{title}</Text>;
+            return (
+                <>
+                    <Text style={styles.headerTitle}>{title}</Text>
+                    <LogoApp
+                        style={[styles.logoApp, { width: height / 12 }]}
+                        styleImg={[styles.logoImg]}
+                    />
+                </>
+            );
         }
     };
 
@@ -38,22 +43,23 @@ export default function HeaderApp(props) {
                         ? props.navigation.toggleDrawer()
                         : props.navigation.goBack();
                 }}
-                sizeButton={height / 20}
+                sizeButton={height / 25}
                 colorButton={colorHex.mainOrange}
             />
             {headerTitle(props.titleHeader)}
-            <View>
-                {props.type !== "notifications" ? (
+
+            {props.type === "home" ? (
+                <View>
                     <ButtonIcon
                         nameIcon={"notifications"}
                         onPress={() => {
                             props.navigation.navigate("Notifications");
                         }}
-                        sizeButton={height / 20}
+                        sizeButton={height / 25}
                         colorButton={colorHex.mainOrange}
                     />
-                ) : null}
-            </View>
+                </View>
+            ) : null}
         </View>
     );
 }

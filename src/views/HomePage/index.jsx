@@ -1,87 +1,115 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import { StyleSheet } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
 import { loginStyles } from "../Login";
 import { SafeAreaView } from "react-native";
 import MoviesSwiper from "../MoviesSwiper";
-import HeaderApp from "../../components/HeaderApp";
 import { moviesManager } from "../../services/MoviesManager";
-import Showtimes from "../Showtimes";
-import optionDrawer from "../../components/LabelDrawer";
-import { createStackNavigator } from "@react-navigation/stack";
+import { ScrollView } from "react-native";
+import { View, Text } from "react-native";
+import ButtonText from "../../components/ButtonText";
+import colorHex from "../../constants/colorHex";
 
-const Stack = createStackNavigator();
+const paramsDefault = {
+    tuNgay: "01/01/2022",
+    maNhom: "GP09",
+    denNgay: "01/10/2022",
+};
 
 export default function HomePage(props) {
     const [banners, setBanners] = useState([]);
-    const fetchBanner = () => {
-        moviesManager.getListBanners("GP09").then((res) => {
-            console.log(res.data)
-            setBanners(res.data);
-        });
+    const [params, setParams] = useState(paramsDefault);
+    const [isActiveBtn, setIsActiveBtn] = useState("showing");
+
+    const getMoviesFromDate = (params) => {
+        moviesManager
+            .getListMovies(params)
+            .then((res) => {
+                // console.log(res);
+                setBanners(res.data);
+            })
+            .catch(() => {
+                getMoviesFromDate(params);
+            });
     };
 
+    const hanldeActiveBtn = (type) => {
+        if (type !== isActiveBtn) {
+            setIsActiveBtn(type);
+        }
+    };
+
+    const changeMoviesFromeDate = useCallback((type) => {
+        if (type !== isActiveBtn) {
+            if (type === "showing") {
+                setParams(paramsDefault);
+            } else {
+                setParams({
+                    tuNgay: "01/10/2022",
+                    maNhom: "GP09",
+                    denNgay: "01/10/2023",
+                });
+            }
+            hanldeActiveBtn(type);
+        }
+    });
+
     useEffect(() => {
-        fetchBanner()
-    }, []);
+        getMoviesFromDate(params);
+    }, [params]);
 
     return (
         <SafeAreaView style={loginStyles.safeAreaView}>
-            {/* <HeaderApp navigation={props.navigation} /> */}
-            <MoviesSwiper banners={banners} />
+            <ScrollView>
+                <View style={styles.slectParams}>
+                    <ButtonText
+                        title={"SHOWING"}
+                        activeOpacity={0.8}
+                        style={[
+                            styles.btnSelect,
+                            {
+                                backgroundColor:
+                                    isActiveBtn === "showing"
+                                        ? colorHex.mainOrange
+                                        : "transparent",
+                            },
+                        ]}
+                        onPress={() => {
+                            changeMoviesFromeDate("showing");
+                        }}
+                    />
+                    <ButtonText
+                        title={"COMING"}
+                        activeOpacity={0.8}
+                        style={[
+                            styles.btnSelect,
+                            {
+                                backgroundColor:
+                                    isActiveBtn === "coming"
+                                        ? colorHex.mainOrange
+                                        : "transparent",
+                            },
+                        ]}
+                        onPress={() => {
+                            changeMoviesFromeDate("coming");
+                        }}
+                    />
+                </View>
+                <MoviesSwiper banners={banners} />
+            </ScrollView>
         </SafeAreaView>
     );
 }
 
-// export const HomeNavigator = (props) => {
-//     return (
-//         <Stack.Navigator initialRouteName="Home">
-//             <Stack.Screen
-//                 name="Home"
-//                 component={HomePage}
-//                 // options={{ headerShown: false }}
-//                 options={optionDrawer({
-//                     labelTitle: "Home",
-//                     titleHeader: "Home",
-//                     headerBar: true,
-//                     typeHeader: "home",
-//                     lockDrawer: true,
-//                 })}
-//             />
-//             <Stack.Screen
-//                 name="Showtimes"
-//                 component={Showtimes}
-//                 options={optionDrawer({
-//                     labelTitle: "Showtimes",
-//                     titleHeader: "Showtimes",
-//                     headerBar: true,
-//                     typeHeader: "showtimes",
-//                     lockDrawer: true,
-//                 })}
-//             />
-//             <Stack.Screen
-//                 name="DetailMovie"
-//                 component={Showtimes}
-//                 // options={optionDrawer({
-//                 //     labelTitle: "Showtimes",
-//                 //     titleHeader: "Showtimes",
-//                 //     headerBar: true,
-//                 //     typeHeader: "showtimes",
-//                 //     lockDrawer: true,
-//                 // })}
-//             />
-//             <Stack.Screen
-//                 name="ShowtimesMovie"
-//                 component={Showtimes}
-//                 // options={optionDrawer({
-//                 //     labelTitle: "Showtimes",
-//                 //     titleHeader: "Showtimes",
-//                 //     headerBar: true,
-//                 //     typeHeader: "showtimes",
-//                 //     lockDrawer: true,
-//                 // })}
-//             />
-//         </Stack.Navigator>
-//     );
-// };
-
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    slectParams: {
+        flexDirection: "row",
+        justifyContent: "center",
+        gap: 15,
+    },
+    btnSelect: {
+        marginTop: 15,
+        width: "40%",
+        borderColor: "#ffffff",
+        borderWidth: 2,
+    },
+});

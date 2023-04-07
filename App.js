@@ -3,14 +3,15 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import "react-native-gesture-handler";
 import Login from "./src/views/Login";
-import MainNavigator from "./src/routes";
-import { StatusBar } from "react-native";
+import MyStatusBar from "./src/components/MyStatusBar";
+import HomeNavigation from "./src/routes/HomeNavigation";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
     return (
         <>
+            <MyStatusBar />
             <NavigationContainer>
                 <Stack.Navigator
                     useLegacyImplementation
@@ -23,17 +24,11 @@ export default function App() {
                     />
                     <Stack.Screen
                         name="mainNavigation"
-                        component={MainNavigator}
+                        component={HomeNavigation}
                         options={{ headerShown: false }}
                     />
                 </Stack.Navigator>
             </NavigationContainer>
-            <StatusBar
-                animated={true}
-                backgroundColor={"#ffffff"}
-                barStyle={"dark-content"}
-                hidden={false}
-            />
         </>
     );
 }

@@ -22,14 +22,14 @@ const styles = StyleSheet.create({
         marginTop: 30,
         alignSelf: "center",
         width: "50%",
+        backgroundColor: colorHex.mainOrange,
+        borderRadius: 20,
     },
     button: {
         textAlign: "center",
-        backgroundColor: colorHex.mainOrange,
         color: colorHex.whiteMain,
-        fontSize: 25,
+        fontSize: 20,
         fontWeight: 600,
         paddingVertical: 8,
-        borderRadius: 20,
     },
 });

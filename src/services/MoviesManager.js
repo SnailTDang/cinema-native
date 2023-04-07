@@ -1,18 +1,14 @@
+import { MOVIES_MANAGER } from "../config/api/apiEndPoint";
 import { BaseService } from "./BaseServices";
 import queryString from "query-string";
 
 export class MoviesManager extends BaseService {
-    getListBanners = (maNhom) => {
-        // const url = queryString.stringifyUrl({
-        //     url: `${postalCodeEndpoint}/get-init`,
-        //     query: { ...params },
-        // });
-        return this.get(
-            `api/QuanLyPhim/LayDanhSachPhimTheoNgay?maNhom=${maNhom}`
-        );
-    };
-    getListMovies = (maNhom) => {
-        return this.get(`api/QuanLyPhim/LayDanhSachPhim?maNhom=${maNhom}`);
+    getListMovies = (params) => {
+        const url = queryString.stringifyUrl({
+            url: `${MOVIES_MANAGER.GET_MOVIES_DATE}`,
+            query: { ...params },
+        });
+        return this.get(url);
     };
 }
 

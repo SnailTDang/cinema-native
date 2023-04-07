@@ -30,9 +30,9 @@ export default function Login() {
                         Please login before Start!
                     </Text>
                 </View>
-                <ContainerView styleProps={[loginStyles.mainView]}>
+                <View style={[loginStyles.mainView]}>
                     <FormLogin />
-                </ContainerView>
+                </View>
             </View>
         </SafeAreaView>
     );

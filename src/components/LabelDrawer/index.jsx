@@ -4,7 +4,11 @@ import colorHex from "../../constants/colorHex";
 import HeaderApp from "../HeaderApp";
 
 export function LabelDrawer(props) {
-    return <Text style={styles.texLabel}>{props.label.toUpperCase()}</Text>;
+    return (
+        <Text style={styles.texLabel}>
+            {props.label ? props.label.toUpperCase() : null}
+        </Text>
+    );
 }
 
 export default function optionDrawer(params) {
