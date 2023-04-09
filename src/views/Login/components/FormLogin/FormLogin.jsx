@@ -1,11 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
-import FormField from "../../../components/FormField";
-import { formData } from "../../../components/FormField/helper/FormData.helper";
-import colorHex from "../../../constants/colorHex";
-import { userServices } from "../../../services/UserServices";
-import ButtonText from "../../../components/ButtonText";
+import FormField from "../../../../components/FormField";
+import { formData } from "../../../../components/FormField/helper/FormData.helper";
+import colorHex from "../../../../constants/colorHex";
+import { userServices } from "../../../../services/UserServices";
+import ButtonText from "../../../../components/ButtonText";
 
 const FormLogin = (props) => {
     const navigation = useNavigation();

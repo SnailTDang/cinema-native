@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { loginStyles } from "../Login";
 import { SafeAreaView, View } from "react-native";
-import MoviesSwiper from "../MoviesSwiper";
+import MoviesSwiper from "./components/MoviesSwiper";
 import { moviesManager } from "../../services/MoviesManager";
 import { ScrollView } from "react-native";
 import ButtonText from "../../components/ButtonText";

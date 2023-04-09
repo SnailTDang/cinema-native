@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import React, { useEffect, useState } from "react";
 import { showtimeServices } from "../../services/ShowtimeServices";
-import { covertUrlImage } from "../MoviesSwiper";
+import { covertUrlImage } from "../HomePage/components/MoviesSwiper";
 
 export default function DetailMovie(props) {
     const [detailMovie, setDetailMovie] = useState();

@@ -10,7 +10,7 @@ import {
     SafeAreaView,
     Image,
 } from "react-native";
-import ButtonText from "../../components/ButtonText";
+import ButtonText from "../../../../components/ButtonText";
 import { useNavigation } from "@react-navigation/native";
 
 export const covertUrlImage = (url) => {
@@ -103,6 +103,8 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     btnBuy: {
-        marginTop: -30,
+        borderColor: "#ffffff",
+        borderWidth: 2,
+        marginTop: -20,
     },
 });

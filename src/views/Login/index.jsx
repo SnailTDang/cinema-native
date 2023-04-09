@@ -9,7 +9,7 @@ import {
 import React from "react";
 
 import colorHex from "../../constants/colorHex";
-import FormLogin from "./components/FormLogin";
+import FormLogin from "./components/FormLogin/FormLogin";
 import { TouchableWithoutFeedback } from "react-native";
 
 export default function Login() {
